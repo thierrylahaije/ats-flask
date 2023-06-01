@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Main Container-->
+<div class="container">
+
+    <!-- Artist Info -->
+    <section>
+        <div class="row my-3">
+            <div class="col-lg-4 album_single_img">
+                <img src="https://images.unsplash.com/photo-1605722243979-fe0be8158232?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80"
+                    class="img-fluid">
+            </div>
+            <div class="col-lg-8 album_single_text">
+                <h2 class="artist_info_title">{{ artist_info.ArtistName }}</h2>
+                <div class="about_artist">
+                    <h5>Location:</h5>
+                    <p>{{ artist_info.ArtistLocation }}</p>
+                    <h5>Number of tracks:</h5>
+                    <p>{{ num_songs }}</p>
+                    <h5>Number of Playlists:</h5>
+                    <p>24</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Artist Info -->
+
+    <!-- Tracks -->
+    <section></section>
+    <div class="row my-3">
+        <div class="col-md-12">
+            <h2>Top 10 Songs All Time</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Song Title</th>
+                            <th>Artist</th>
+                            <th>Number of Plays</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for song in top_songs %}
+
+                        <tr onclick="window.location.href = 'song?song-id={{ song.song_id}}';">
+                            <td>{{ song.rank }}</td>
+                            <td>{{ song.Title }}</td>
+                            <td>{{ song.ArtistName }}</td>
+                            <td>{{ song.count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </section>
+    <!-- End of Tracks-->
+
+</div>
+<!-- End Main Container-->
+
+{% endblock %}

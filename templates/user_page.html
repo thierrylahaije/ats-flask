@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Main Container-->
+<div class="container">
+
+    <!-- User Info -->
+    <section>
+        <div class="row my-3">
+            <div class="col-lg-4 album_single_img d-flex align-items-center justify-content-center">
+                <img src="{{ url_for('static', filename='images/icon-user.png') }}" class="img-fluid-user">
+            </div>
+            <div class="col-lg-8 album_single_text mt-5">
+                <h2>{{ user_info.username }}</h2>
+                <div class="about_artist">
+                    <h5>Country:</h5>
+                    <p>{{ user_info.country }}</p>
+                    <h5>Age:</h5>
+                    <p>{{ user_info.age }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End User Info -->
+
+    <!-- Tracks -->
+    <section></section>
+    <div class="row my-3">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col">
+                    <h2>Recently Played between {{ start_date }} and {{ end_date }}</h2>
+                </div>
+                <div class="col-auto">
+                    <span class="float-end">
+
+                        <!-- Week Selector -->
+                        <nav aria-label="Search results pagination" class="d-flex justify-content-center">
+                            <ul class="pagination">
+
+                                {% if nav_dict['curr_week'] > 0 %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="user?username={{ user_info.username }}&week={{ nav_dict.prev_week }}">Previous
+                                        Week</a>
+                                </li>
+                                {% endif %}
+
+                                {% if nav_dict['curr_week'] < current_week and nav_dict['curr_week']>= 0 %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                            href="user?username={{ user_info.username }}&week={{ nav_dict.next_week }}">Next
+                                            Week</a>
+                                    </li>
+                                    {% endif %}
+                            </ul>
+                        </nav>
+                        <!-- End Week Selector -->
+
+                    </span>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Song Title</th>
+                            <th>Artist</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for song in top_songs %}
+                        <tr>
+                            <td>{{ song[0] }}</td>
+                            <td>{{ song[1] }}</td>
+                            <td>{{ song[2] }}</td>
+                            <td>{{ song[3] }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </section>
+    <!-- End of Tracks-->
+
+</div>
+<!-- End Main Container-->
+
+{% endblock %}

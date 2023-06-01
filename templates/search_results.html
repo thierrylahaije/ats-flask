@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Main Container-->
+<div class="container my-3">
+
+    <!-- Search Results -->
+    <h1 style="text-align: center;">Search Results</h1>
+    {% if results %}
+    <p style="text-align: center;">Showing result {{ start_result }}-{{ end_result }} out of {{ total_results }} for "{{
+        query }}"</p>
+    <div class="list-group">
+
+        {% for result in results %}
+
+        {% if result.Title %}
+        <a href="song?song-id={{ result.SongID }}" class="list-group-item list-group-item-action">
+            <div class="row">
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <div class="col-lg-1 mobile-col" style="text-align: center; margin-right:20px;">
+                        <i class="fa-solid fa-music fa-2xl search_icon"></i>
+                    </div>
+                </div>
+                <div class="col-lg-11 center-text">
+                    <p><b>Song</b></p>
+                    {{ result.Title }} by <i>{{ result.ArtistName }}</i>
+                </div>
+            </div>
+        </a>
+
+        {% elif result.ArtistName %}
+        <a href="artist?artist-id={{ result.ArtistID }}" class="list-group-item list-group-item-action">
+            <div class="row">
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <div class="col-lg-1 mobile-col" style="text-align: center; margin-right:20px;">
+                        <i class="fa-solid fa-head-side-cough fa-2xl search_icon"></i>
+                    </div>
+                </div>
+                <div class="col-lg-11 center-text">
+                    <p><i>Artist</i></p>
+                    {{ result.ArtistName }}
+                </div>
+            </div>
+        </a>
+
+        {% else %}
+        <a href="user?username={{ result.username }}" class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="width_set" style="display: flex; justify-content: center; align-items: center;">
+                    <div class="col mobile-col">
+                        <i class="fa-solid fa-user fa-2xl search_icon"></i>
+                    </div>
+                </div>
+                <div class="col-lg-11 center-text">
+                    <p><i>User</i></p>
+                    {{ result.username }}
+                </div>
+            </div>
+        </a>
+
+        {% endif %}
+        {% endfor %}
+
+    </div><br>
+
+    <!-- Pagination for search results -->
+    <nav aria-label="Search results pagination" class="d-flex justify-content-center">
+        <ul class="pagination">
+            {% if prev_url %}
+            <li class="page-item">
+                <a class="page-link" href="{{ prev_url }}" tabindex="-1" aria-disabled="false">Previous</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+            {% endif %}
+
+            {% for page_num in range(1, total_pages + 1) %}
+            {% if page_num == page %}
+            <li class="page-item active mobile-disable" aria-current="page">
+                <span class="page-link">{{ page_num }}</span>
+            </li>
+            {% else %}
+            <li class="page-item mobile-disable">
+                <a class="page-link" href="{{ url_for('search', query=query, page=page_num) }}">{{ page_num }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if next_url %}
+            <li class="page-item">
+                <a class="page-link" href="{{ next_url }}">Next</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Next</span>
+            </li>
+            {% endif %}
+
+            {% else %}
+            <p style="text-align:center">No search results</p>
+            {% endif %}
+
+            <!-- End Search Results-->
+
+
+</div>
+<!-- End Main Container-->
+
+{% endblock %}
