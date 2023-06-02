@@ -1,7 +1,7 @@
 ### LIBRARIES ###
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func, desc, and_, extract
+from sqlalchemy import func, desc, and_, extract, Column, String
 from sqlalchemy.sql import text
 import os
 from datetime import datetime, timedelta
@@ -64,7 +64,6 @@ class songs(db.Model):
     ArtistID = db.Column(db.String)
     ArtistName = db.Column(db.String)
     SongID = db.Column(db.String, primary_key=True)
-    ArtistID = db.Column(db.Integer)
     Danceability = db.Column(db.Float)
     Duration = db.Column(db.Numeric)
     KeySignature = db.Column(db.Integer)
@@ -414,5 +413,5 @@ def static_css(path):
     return app.send_static_file('css/' + path)
 
 
-if __name__ == '__app__':
+if __name__ == '__main__':
     app.run(debug=True)
