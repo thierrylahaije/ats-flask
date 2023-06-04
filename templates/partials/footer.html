@@ -83,6 +83,15 @@
         }
     });
 </script>
+<script>
+    function loadCSS(href) {
+      var cssLink = document.createElement("link");
+      cssLink.rel = "stylesheet";
+      cssLink.href = href;
+      document.head.appendChild(cssLink);
+    }
+    loadCSS("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
+  </script>  
 <!-- End of Scripts-->
 
 </body>
