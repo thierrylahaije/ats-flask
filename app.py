@@ -25,9 +25,7 @@ db = SQLAlchemy(app)
 
 ### CLASSES FOR TABLES ###
 
-# listening table
-
-
+# listening history table
 class listening(db.Model):
     user = db.Column(db.String)
     date = db.Column(db.Date)
@@ -40,8 +38,6 @@ class listening(db.Model):
     song = db.relationship('songs', backref='listenings')
 
 # artists table
-
-
 class artists(db.Model):
     ArtistID = db.Column(db.String, primary_key=True)
     ArtistName = db.Column(db.String)
@@ -49,8 +45,6 @@ class artists(db.Model):
     featured = db.Column(db.String)
 
 # users table
-
-
 class users(db.Model):
     username = db.Column(db.String, primary_key=True)
     age = db.Column(db.Integer)
@@ -58,8 +52,6 @@ class users(db.Model):
     description = db.Column(db.String)
 
 # songs table
-
-
 class songs(db.Model):
     ArtistID = db.Column(db.String)
     ArtistName = db.Column(db.String)
@@ -75,46 +67,53 @@ class songs(db.Model):
 ### ROUTES ###
 
 # route for home
-
-
 @app.route('/')
 def index():
 
     # recent tracks query
-    recent_tracks = db.session.query(listening.timestamp, songs.ArtistName, songs.Title, songs.ArtistID, songs.SongID)\
-        .join(songs, listening.song_id == songs.SongID)\
-        .order_by(listening.timestamp.desc())\
-        .limit(10)\
-        .all()
+    subquery = db.session.query(
+        listening.song_id,
+        listening.timestamp
+    ).order_by(listening.timestamp.desc()).limit(10).subquery()
 
-    # weekly top 15
-    top_songs = db.session.query(listening.song_id, songs.Title, songs.ArtistName, songs.ArtistID,
-                                 func.count(listening.song_id),
-                                 func.row_number().over(order_by=func.count(listening.song_id).desc()).label('rank'))\
-        .join(songs, listening.song_id == songs.SongID)\
-        .group_by(listening.song_id)\
-        .order_by(func.count(listening.song_id).desc())\
-        .limit(15)\
-        .all()
+    recent_tracks = db.session.query(
+        subquery.c.timestamp,
+        songs.ArtistName,
+        songs.Title,
+        songs.SongID
+    ).join(songs, subquery.c.song_id == songs.SongID)
+
+    # top 15
+    subquery = db.session.query(
+        listening.song_id,
+        func.count(listening.song_id).label('song_count')
+    ).join(listening.song).group_by(listening.song_id).subquery()
+
+    top_songs = db.session.query(
+        subquery.c.song_id,
+        songs.Title,
+        songs.ArtistName,
+        songs.ArtistID,
+        subquery.c.song_count,
+        func.rank().over(order_by=subquery.c.song_count.desc()).label('rank')
+    ).join(songs, subquery.c.song_id == songs.SongID).limit(15)
 
     # featured artists
     featured_artists = artists.query.filter_by(
         featured='1').order_by(func.random()).limit(8).all()
 
     # recent users
-    recent_users = db.session.query(listening.user, func.max(listening.timestamp).label("max_timestamp"), songs.ArtistName, songs.Title)\
-        .join(songs, listening.song_id == songs.SongID)\
-        .group_by(listening.user)\
-        .order_by(desc("max_timestamp"))\
-        .limit(6)\
-        .all()
+    recent_users = db.session.query(
+        listening.user,
+        func.max(listening.timestamp).label("max_timestamp"),
+        songs.ArtistName,
+        songs.Title
+    ).join(listening.song).group_by(listening.user).order_by(desc("max_timestamp")).limit(6)
 
     # render template
     return render_template('index.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html', tracks=recent_tracks, top_songs=top_songs, featured_artists=featured_artists, recent_users=recent_users)
 
 # route for artist
-
-
 @app.route('/artist')
 def artist_page():
 
@@ -146,8 +145,6 @@ def artist_page():
     return render_template('artist_page.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html', artist_id=artist_id, artist_info=artist_info, num_songs=num_songs, top_songs=top_songs)
 
 # route for user
-
-
 @app.route('/user')
 def user_page():
 
@@ -238,8 +235,6 @@ def user_page():
     return render_template('user_page.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html', user_info=user_info, top_songs=formatted_songs, nav_dict=nav_dict, start_date=start_date.date(), end_date=end_date.date(), current_week=current_week)
 
 # route for search
-
-
 @app.route('/search')
 def search():
     query = request.args.get('query')
@@ -301,8 +296,6 @@ def search():
     return render_template('search_results.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html', total_results=total_results, max_pages=max_pages, results=current_page_results, page=page, query=query, total_pages=total_pages, prev_url=prev_url, next_url=next_url, start_result=start_result, end_result=end_result)
 
 # route for privacy & terms
-
-
 @app.route('/privacy_terms')
 def privacy_terms():
 
@@ -310,8 +303,6 @@ def privacy_terms():
     return render_template('privacy_terms.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html')
 
 # route for article
-
-
 @app.route('/article')
 def article_single():
 
@@ -319,8 +310,6 @@ def article_single():
     return render_template('article_single.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html')
 
 # route for song page
-
-
 @app.route('/song')
 def song():
 
@@ -406,8 +395,6 @@ def song():
 
 
 # Add a static route for CSS
-
-
 @app.route('/static/css/<path:path>')
 def static_css(path):
     return app.send_static_file('css/' + path)
