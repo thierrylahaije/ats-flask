@@ -33,6 +33,7 @@ button {
 
 body {
     font-family: Rubik, Arial, sans-serif;
+    font-display: swap;
     overflow-x: hidden;
     color: #607289;
 }
@@ -41,6 +42,7 @@ h5 {
     font-size: 20px;
     line-height: 1.375;
     font-family: Rubik, Arial, sans-serif;
+    font-display: swap;
     font-weight: bolder;
     color: rgb(1, 51, 101) !important
 }
