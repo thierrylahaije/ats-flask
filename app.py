@@ -111,7 +111,7 @@ def index():
     ).join(listening.song).group_by(listening.user).order_by(desc("max_timestamp")).limit(6)
 
     # render template
-    return render_template('index.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html', tracks=recent_tracks, top_songs=top_songs, featured_artists=featured_artists, recent_users=recent_users)
+    return render_template('index.html', head='partials/head.html', loading='partials/loading.html', header='partials/header.html', footer='partials/footer.html', tracks=recent_tracks, top_songs=top_songs, featured_artists=featured_artists, recent_users=recent_users)
 
 # route for artist
 @app.route('/artist')
@@ -142,7 +142,7 @@ def artist_page():
         limit(10).all()
 
     # render template
-    return render_template('artist_page.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html', artist_id=artist_id, artist_info=artist_info, num_songs=num_songs, top_songs=top_songs)
+    return render_template('artist_page.html', head='partials/head.html', loading='partials/loading_empty.html', header='partials/header.html', footer='partials/footer.html', artist_id=artist_id, artist_info=artist_info, num_songs=num_songs, top_songs=top_songs)
 
 # route for user
 @app.route('/user')
@@ -232,7 +232,7 @@ def user_page():
             (title, artist_name, formatted_date, formatted_time))
 
     # render template
-    return render_template('user_page.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html', user_info=user_info, top_songs=formatted_songs, nav_dict=nav_dict, start_date=start_date.date(), end_date=end_date.date(), current_week=current_week)
+    return render_template('user_page.html', head='partials/head.html', loading='partials/loading_empty.html', header='partials/header.html', footer='partials/footer.html', user_info=user_info, top_songs=formatted_songs, nav_dict=nav_dict, start_date=start_date.date(), end_date=end_date.date(), current_week=current_week)
 
 # route for search
 @app.route('/search')
@@ -293,21 +293,21 @@ def search():
         end_result = start_result + 9
 
     # Render the results for the current page
-    return render_template('search_results.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html', total_results=total_results, max_pages=max_pages, results=current_page_results, page=page, query=query, total_pages=total_pages, prev_url=prev_url, next_url=next_url, start_result=start_result, end_result=end_result)
+    return render_template('search_results.html', head='partials/head.html', loading='partials/loading_empty.html', header='partials/header.html', footer='partials/footer.html', total_results=total_results, max_pages=max_pages, results=current_page_results, page=page, query=query, total_pages=total_pages, prev_url=prev_url, next_url=next_url, start_result=start_result, end_result=end_result)
 
 # route for privacy & terms
 @app.route('/privacy_terms')
 def privacy_terms():
 
     # render template
-    return render_template('privacy_terms.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html')
+    return render_template('privacy_terms.html', head='partials/head.html', loading='partials/loading_empty.html', header='partials/header.html', footer='partials/footer.html')
 
 # route for article
 @app.route('/article')
 def article_single():
 
     # render template
-    return render_template('article_single.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html')
+    return render_template('article_single.html', head='partials/head.html', loading='partials/loading_empty.html', header='partials/header.html', footer='partials/footer.html')
 
 # route for song page
 @app.route('/song')
@@ -391,7 +391,7 @@ def song():
 
 
     # render template
-    return render_template('song_page.html', head='partials/head.html', header='partials/header.html', footer='partials/footer.html', song_info=song_info, num_plays=num_plays, top_listeners=top_listeners, age_groups=age_groups, plays_per_month=plays_per_month, plays_per_country=plays_per_country, unique_listeners_per_country=unique_listeners_per_country)
+    return render_template('song_page.html', head='partials/head.html', loading='partials/loading_empty.html', header='partials/header.html', footer='partials/footer.html', song_info=song_info, num_plays=num_plays, top_listeners=top_listeners, age_groups=age_groups, plays_per_month=plays_per_month, plays_per_country=plays_per_country, unique_listeners_per_country=unique_listeners_per_country)
 
 
 # Add a static route for CSS

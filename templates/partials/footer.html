@@ -101,13 +101,21 @@
 
 <script>
     function loadFont() {
-      var fontLink = document.createElement("link");
-      fontLink.rel = "stylesheet";
-      fontLink.href = "https://fonts.googleapis.com/css?family=Rubik";
-      document.head.appendChild(fontLink);
+        var fontLink = document.createElement("link");
+        fontLink.rel = "stylesheet";
+        fontLink.href = "https://fonts.googleapis.com/css?family=Rubik";
+        document.head.appendChild(fontLink);
     }
     window.addEventListener("load", loadFont);
-  </script>
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Hide the loading screen
+        var loadingScreen = document.getElementById('loading-screen');
+        loadingScreen.style.display = 'none';
+    });
+</script>
 <!-- End of Scripts-->
 
 </body>
