@@ -83,6 +83,8 @@
         }
     });
 </script>
+
+<!-- bootstrap defered-->
 <script>
     function loadCSS(href) {
       var cssLink = document.createElement("link");
@@ -91,7 +93,19 @@
       document.head.appendChild(cssLink);
     }
     loadCSS("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
-  </script>  
+  </script>
+
+<!-- defered font -->
+<script>
+    function loadFont() {
+      var fontLink = document.createElement("link");
+      fontLink.rel = "stylesheet";
+      fontLink.href = "https://fonts.googleapis.com/css?family=Rubik";
+      document.head.appendChild(fontLink);
+    }
+    window.addEventListener("load", loadFont);
+  </script>
+  
 <!-- End of Scripts-->
 
 </body>
