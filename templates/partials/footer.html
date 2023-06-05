@@ -3,8 +3,10 @@
     <div class="container pt-5 border-bottom">
         <div class="row">
             <div class="col-md-3 col-sm-12 mb-3">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" width="200" height="30" class="logo_footer"><br><br>
-                <p>We’re a fictitious music streaming service with a real website and API. Built for educational purposes, you can use us to learn web scraping! </p>
+                <img src="{{ url_for('static', filename='images/logo.png') }}" width="200" height="30"
+                    class="logo_footer"><br><br>
+                <p>We’re a fictitious music streaming service with a real website and API. Built for educational
+                    purposes, you can use us to learn web scraping! </p>
             </div>
             <div class="col-md-9 col-sm-12">
 
@@ -22,9 +24,12 @@
                 <div class="col-md-4 col-sm-6 col-6 p-0 mb-3 float-left">
                     <h5 class="mb-4 font-weight-bold text-uppercase">Learn how to scrape</h5>
                     <ul class="list-group">
-                        <li class="list-group-item bg-transparent border-0 p-0 mb-2"><a href="">Tutorial: How to scrape the site</a></li>
-                        <li class="list-group-item bg-transparent border-0 p-0 mb-2"><a href="">Tutorial: Using the API</a></li>
-                        <li class="list-group-item bg-transparent border-0 p-0 mb-2"><a href="">API Documentation</a></li>
+                        <li class="list-group-item bg-transparent border-0 p-0 mb-2"><a href="">Tutorial: How to scrape
+                                the site</a></li>
+                        <li class="list-group-item bg-transparent border-0 p-0 mb-2"><a href="">Tutorial: Using the
+                                API</a></li>
+                        <li class="list-group-item bg-transparent border-0 p-0 mb-2"><a href="">API Documentation</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -62,8 +67,8 @@
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" defer></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" defer></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
     var swiper = new Swiper('.swiper-container', {
         spaceBetween: 20,
@@ -84,18 +89,16 @@
     });
 </script>
 
-<!-- bootstrap defered-->
 <script>
     function loadCSS(href) {
-      var cssLink = document.createElement("link");
-      cssLink.rel = "stylesheet";
-      cssLink.href = href;
-      document.head.appendChild(cssLink);
+        var cssLink = document.createElement("link");
+        cssLink.rel = "stylesheet";
+        cssLink.href = href;
+        document.head.appendChild(cssLink);
     }
     loadCSS("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
-  </script>
+</script>
 
-<!-- defered font -->
 <script>
     function loadFont() {
       var fontLink = document.createElement("link");
@@ -105,8 +108,8 @@
     }
     window.addEventListener("load", loadFont);
   </script>
-  
 <!-- End of Scripts-->
 
 </body>
+
 </html>
