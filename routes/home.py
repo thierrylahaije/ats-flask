@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint
-from database import init_app, db
+from database import db
 from models import listening, artists, songs
 from sqlalchemy import func, desc
 
